@@ -29,8 +29,7 @@ with open("network.pkl", "rb") as f:
 
 def main():
     os.chdir(os.path.dirname(__file__))
-    # token = input("Please enter bot token: ")
-    token = "OTkyMDc5MTkzNjg2OTQ1ODcz.G0jwV8.Wx2PjeZDddN_UGiehoF1fhOI0OVyGxMTr3tlsM"
+    token = input("Please enter bot token: ")
     intents = discord.Intents.default()
     intents.members = True
     intents.presences = True
