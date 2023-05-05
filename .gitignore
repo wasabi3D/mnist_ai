@@ -3,3 +3,4 @@ __pycache__/
 *.png
 dataset/mnist.pkl
 *.gz
+*.pkl

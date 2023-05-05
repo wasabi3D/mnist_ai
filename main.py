@@ -5,13 +5,14 @@ import io
 
 import numpy as np
 
-from ai import TwoLayerNet
+# from ai import TwoLayerNet
+from common.network import MultiLayerNet
 from PIL import Image
 from dataset.mnist import load_mnist
 
 
-with open("network.pkl", "rb") as f:
-    network: TwoLayerNet = pickle.load(f)
+with open("network2.0.pkl", "rb") as f:
+    network: MultiLayerNet = pickle.load(f)
 
 # =====TEST=====
 (x_train, t_train), (x_test, t_test) = load_mnist(normalize=True, one_hot_label=True)
@@ -42,6 +43,7 @@ def main():
     @client.event
     async def on_message(message: discord.Message):
         if client.user.mentioned_in(message):
+            print("Message")
             for image_raw in message.attachments:
                 image = Image.open(io.BytesIO(await image_raw.read()))
                 image = image.resize((28, 28))

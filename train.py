@@ -1,7 +1,7 @@
-import numpy as np
+from common.network import MultiLayerNet
+from common.optimizers import *
 from dataset.mnist import load_mnist
-from ai import TwoLayerNet
-import pickle
+
 
 # Load training and test data
 # x: image, t: answer
@@ -11,48 +11,8 @@ x_test: np.ndarray
 t_test: np.ndarray
 (x_train, t_train), (x_test, t_test) = load_mnist(normalize=True, one_hot_label=True)
 
-# Show sample image
-# sample_img, sample_label = x_train[0].reshape(28, 28), t_train[0]
-# print(f"Label of the sample image is {sample_label}")
-# pil_sample = Image.fromarray(sample_img * 255)
-# pil_sample.show()
 
+network = MultiLayerNet(784, [100, 100, 100], 10, Adam())
 
-network = TwoLayerNet(input_size=784, hidden_size=50, output_size=10)
+network.fit(x_train, t_train, x_test, t_test, epochs=15, network_save_name="network2.0.pkl")
 
-iters_num = 100000
-train_size = x_train.shape[0]
-batch_size = 100
-learning_rate = 0.1
-
-train_loss_list = []
-train_acc_list = []
-test_acc_list = []
-
-iter_per_epoch = max(train_size / batch_size, 1)
-
-for i in range(iters_num):
-    batch_mask = np.random.choice(train_size, batch_size)
-    x_batch = x_train[batch_mask]
-    t_batch = t_train[batch_mask]
-
-    grad = network.gradient(x_batch, t_batch)
-
-    # Update
-    for key in ('W1', 'b1', 'W2', 'b2'):
-        network.params[key] -= learning_rate * grad[key]
-
-    loss = network.loss(x_batch, t_batch)
-    train_loss_list.append(loss)
-
-    if i % iter_per_epoch == 0:
-        train_acc = network.accuracy(x_train, t_train)
-        test_acc = network.accuracy(x_test, t_test)
-        train_acc_list.append(train_acc)
-        test_acc_list.append(test_acc)
-        print(train_acc, test_acc)
-
-
-if input("Save network? (y/n)") == "y":
-    with open("network.pkl", "wb") as f:
-        pickle.dump(network, f)
