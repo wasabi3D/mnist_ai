@@ -1,6 +1,6 @@
 
 # IF YOU WANT TO BOOST CALCULATIONS BY USING YOUR GRAPHICS CARD, ENABLE THIS
-graphics_boost = True
+graphics_boost = False
 # ==========================================================================
 
 

@@ -3,12 +3,11 @@ import os
 import pickle
 import io
 
-import numpy as np
-
-# from ai import TwoLayerNet
 from common.network import MultiLayerNet
 from PIL import Image
 from dataset.mnist import load_mnist
+from build_predict_only import build
+import numpy as np
 
 
 with open("network2.0.pkl", "rb") as f:

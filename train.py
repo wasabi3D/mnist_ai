@@ -47,6 +47,6 @@ except FileNotFoundError:
 
 print(type(x_train[0][0]))
 print(f"Final data size: {len(x_train)}")
-network = MultiLayerNet(784, [100, 100, 100], 10, Adam())
+network = MultiLayerNet(784, [100, 100, 100], 10, Adam(), train_verbose=False)
 network.fit(x_train, t_train, x_test, t_test, epochs=15, network_save_name="network2.0.pkl", evaluate_num=100)
 

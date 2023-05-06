@@ -1,5 +1,3 @@
-import numpy as np
-
 from common.numpy_import import *
 from common.layers import *
 from common.optimizers import *
@@ -123,8 +121,7 @@ class MultiLayerNet:
                 train_acc = self.accuracy(x_train_sample, t_train_sample)
                 test_acc = self.accuracy(x_test_sample, t_test_sample)
 
-                if self.verbose:
-                    print(f"=== epoch: {int(it / iter_per_epoch)}, train acc: {train_acc}, test acc: {test_acc} ===")
+                print(f"=== epoch: {int(it / iter_per_epoch)}, train acc: {train_acc}, test acc: {test_acc} ===")
 
         if network_save_name is not None:
             with open(network_save_name, "wb") as f:

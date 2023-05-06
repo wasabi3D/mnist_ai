@@ -34,6 +34,11 @@ class ReLU:
         dout[self.neg_mask] = 0
         return dout
 
+    def to_numpy(self):
+        import cupy
+        for p in ("neg_mask", ):
+            self.__dict__[p] = cupy.asnumpy(self.__dict__[p])
+
 
 class Sigmoid:
     def __init__(self):
@@ -45,6 +50,10 @@ class Sigmoid:
 
     def backward(self, dout: np.ndarray):
         return dout * (1.0 - self.y) * self.y
+
+    def to_numpy(self):
+        import cupy
+        self.__dict__["y"] = cupy.asnumpy(self.__dict__["y"])
 
 
 class Affine:
@@ -65,6 +74,11 @@ class Affine:
         self.db = np.sum(dout, axis=0)
         return dx
 
+    def to_numpy(self):
+        import cupy
+        for p in ("W", "b", "x", "dW", "db"):
+            self.__dict__[p] = cupy.asnumpy(self.__dict__[p])
+
 
 class SoftmaxWithLoss:
     def __init__(self):
@@ -83,3 +97,8 @@ class SoftmaxWithLoss:
         batch_size = self.t.shape[0]
         dx = (self.y - self.t) / batch_size
         return dx
+
+    def to_numpy(self):
+        import cupy
+        for p in ("y", "t", "loss"):
+            self.__dict__[p] = cupy.asnumpy(self.__dict__[p])
