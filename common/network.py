@@ -94,6 +94,7 @@ class MultiLayerNet:
             batch_size=100,
             evaluate_num=None,
             network_save_name=None):
+        import numpy
         x_train = np.asarray(x_train)
         t_train = np.asarray(t_train)
         x_test = np.asarray(x_test)
@@ -113,8 +114,11 @@ class MultiLayerNet:
                 x_test_sample, t_test_sample = x_test, t_test
                 if not (evaluate_num is None):
                     t = evaluate_num
-                    x_train_sample, t_train_sample = x_train[:t], t_train[:t]
-                    x_test_sample, t_test_sample = x_test[:t], t_test[:t]
+                    rng = numpy.random.default_rng()
+                    train_mask = rng.choice(x_train.shape[0], t, replace=False)
+                    test_mask = rng.choice(x_test.shape[0], t, replace=False)
+                    x_train_sample, t_train_sample = x_train[train_mask], t_train[train_mask]
+                    x_test_sample, t_test_sample = x_test[test_mask], t_test[test_mask]
 
                 train_acc = self.accuracy(x_train_sample, t_train_sample)
                 test_acc = self.accuracy(x_test_sample, t_test_sample)
