@@ -10,7 +10,7 @@ from build_predict_only import build
 import numpy as np
 
 
-with open("network2.0.pkl", "rb") as f:
+with open("network2.0letters.pkl", "rb") as f:
     network: MultiLayerNet = pickle.load(f)
 
 # =====TEST=====
@@ -62,7 +62,7 @@ def main():
         if client.user.mentioned_in(message):
             for image_raw in message.attachments:
                 img_array = convert_to_input(io.BytesIO(await image_raw.read()), contrast_scale=4.5)
-                await message.channel.send(str(np.argmax(network.predict(img_array.flatten()))))
+                await message.channel.send(chr(65 + np.argmax(network.predict(img_array.flatten()))))
     client.run(token)
 
 

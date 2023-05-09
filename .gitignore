@@ -4,3 +4,4 @@ __pycache__/
 dataset/mnist.pkl
 *.gz
 *.pkl
+*.DS_STORE
